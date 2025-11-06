@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "226d6064-bc3e-4300-819f-6b7e10c780a1",
+		"name": "CRUD Operation API Endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49515490",
+		"_collection_link": "https://kenjebekov-daniyar-1409-4528100.postman.co/workspace/%D0%94%D0%B0%D0%BD%D0%B8%D1%8F%D1%80-%D0%9A%D0%B5%D0%BD%D0%B6%D0%B5%D0%B1%D0%B5%D0%BA%D0%BE%D0%B2's-Workspace~96d8c2b5-0e26-4344-816c-0eaa6425b2df/collection/49515490-226d6064-bc3e-4300-819f-6b7e10c780a1?action=share&source=collection_link&creator=49515490"
+	},
+	"item": [
+		{
+			"name": "Positive_tests",
+			"item": [
+				{
+					"name": "Create Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set User ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.globals.set(\"employee_id_var\", jsonData.id);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if the fields are match to globals\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"name_var\"));\r",
+									"    pm.expect(jsonData.surname).to.eql(pm.globals.get(\"surname_var\"));\r",
+									"    pm.expect(jsonData.department).to.eql(pm.globals.get(\"department_var\"));\r",
+									"    pm.expect(jsonData.salary).to.eql(Number(pm.globals.get(\"salary_var\")));\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name_var}}\",\r\n    \"surname\": \"{{surname_var}}\",\r\n    \"salary\": {{salary_var}},\r\n    \"department\": \"{{department_var}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://emps.system.edu.kg/api/employees",
+							"protocol": "https",
+							"host": [
+								"emps",
+								"system",
+								"edu",
+								"kg"
+							],
+							"path": [
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check employee search by ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(Number(pm.globals.get(\"employee_id_var\")));\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://emps.system.edu.kg/api/employees/{{employee_id_var}}",
+							"protocol": "https",
+							"host": [
+								"emps",
+								"system",
+								"edu",
+								"kg"
+							],
+							"path": [
+								"api",
+								"employees",
+								"{{employee_id_var}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check if salary changed\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.salary).to.eql(Number(pm.globals.get(\"new_salary_var\")));\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{employee_id_var}},\r\n    \"name\": \"{{name_var}}\",\r\n    \"surname\": \"{{surname_var}}\",\r\n    \"salary\": {{new_salary_var}},\r\n    \"department\": \"{{department_var}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://emps.system.edu.kg/api/employees",
+							"protocol": "https",
+							"host": [
+								"emps",
+								"system",
+								"edu",
+								"kg"
+							],
+							"path": [
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://emps.system.edu.kg/api/employees/{{employee_id_var}}",
+							"protocol": "https",
+							"host": [
+								"emps",
+								"system",
+								"edu",
+								"kg"
+							],
+							"path": [
+								"api",
+								"employees",
+								"{{employee_id_var}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Negative_tests",
+			"item": [
+				{
+					"name": "Get Employee by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://emps.system.edu.kg/api/employees/{{employee_id_var}}",
+							"protocol": "https",
+							"host": [
+								"emps",
+								"system",
+								"edu",
+								"kg"
+							],
+							"path": [
+								"api",
+								"employees",
+								"{{employee_id_var}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{employee_id_var}},\r\n    \"name\": \"{{name_var}}\",\r\n    \"surname\": \"{{surname_var}}\",\r\n    \"salary\": {{new_salary_var}},\r\n    \"department\": \"{{department_var}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://emps.system.edu.kg/api/employees",
+							"protocol": "https",
+							"host": [
+								"emps",
+								"system",
+								"edu",
+								"kg"
+							],
+							"path": [
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Employee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://emps.system.edu.kg/api/employees/{{employee_id_var}}",
+							"protocol": "https",
+							"host": [
+								"emps",
+								"system",
+								"edu",
+								"kg"
+							],
+							"path": [
+								"api",
+								"employees",
+								"{{employee_id_var}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	]
+}
